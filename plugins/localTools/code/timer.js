@@ -32,7 +32,7 @@ async function scheduleTimer({
 
     return {
         totalWeek: 16, // 一般为16周
-        startSemester, // 开学时间戳 (2024-02-26)
+        startSemester, // 开学时间戳
         startWithSunday: false, // 是否周日为起始日
         showWeekend: true, // 显示周末
         forenoon: 4, // 上午课程节数

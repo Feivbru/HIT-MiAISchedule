@@ -39,7 +39,10 @@ function scheduleHtmlParser(html) {
                 if (!trimmedText.includes('[') && !trimmedText.includes('周')) {
                     // 如果当前课程存在且没有教室信息，则这是教室信息而不是新课程
                     if (currentCourse && !currentCourse.position) {
-                        currentCourse.position = trimmedText
+                        // 如果是体育课，不自动设置教室信息
+                        if (!currentCourse.name.includes('体育')) {
+                            currentCourse.position = trimmedText
+                        }
                         continue
                     }
                     
@@ -53,7 +56,11 @@ function scheduleHtmlParser(html) {
                         sections: [],
                         weeks: []
                     }
-                    for (let section = startSection; section <= endSection; section++) {
+                    // 如果是体育课，设置默认教室为"待定"
+                    if (trimmedText.includes('体育')) {
+                        currentCourse.position = '待定'
+                    }
+                    for (var section = startSection; section <= endSection; section++) {
                         currentCourse.sections.push({ section })
                     }
                     continue
