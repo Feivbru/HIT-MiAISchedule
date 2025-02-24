@@ -12,11 +12,11 @@ function scheduleHtmlParser(html) {
         
         // 获取时间段信息
         const timeCell = $(tr).find('td').eq(1).text().trim()
-        if (!timeCell) return
+        if (!timeCell) continue
 
         // 解析节次
         const sectionMatch = timeCell.match(/第(\d+),*(\d*)节/)
-        if (!sectionMatch) return
+        if (!sectionMatch) continue
         const startSection = parseInt(sectionMatch[1])
         const endSection = sectionMatch[2] ? parseInt(sectionMatch[2]) : startSection
 
@@ -151,7 +151,10 @@ function scheduleHtmlParser(html) {
                         }
                     }
                 } else if (!trimmedText.includes('[') && !trimmedText.includes('周') && currentCourse && !currentCourse.position) {
-                    currentCourse.position = trimmedText
+                    // 如果是体育课，不自动设置教室信息
+                    if (!currentCourse.name.includes('体育')) {
+                        currentCourse.position = trimmedText
+                    }
                 }
             }
             
